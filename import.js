@@ -20,6 +20,13 @@ async function importData(data) {
     for (let row of data){
         console.log(row);
         console.log(row.isCorrect1);
+        const existingQuestion = await Question.findOne({ text: row.question });
+
+        if(existingQuestion){
+            console.log('Question already exists:', row.question);
+            continue;
+        }
+
         const question = new Question({
             text: row.question,
             answers: [

@@ -2,7 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Question = require('./models/Question'); // Import model
 const questionsRoutes = require('./routes/questions'); // Import routes
+const cors = require('cors');
 const app = express();
+app.use(cors());
 app.use('/questions', questionsRoutes); // Use the routes
 const port = 3000;
 
