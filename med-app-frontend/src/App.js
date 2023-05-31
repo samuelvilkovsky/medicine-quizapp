@@ -4,8 +4,8 @@ import Quiz from './Quiz';
 
 const App = () => {
   return (
-    <div className='flex flex-col App'>
-      <h1 className='text-lg'>Welcome toasd the Quiz!</h1>
+    <div className='flex flex-col items-center App'>
+      <h1 className='text-3xl font-light my-5 text-orange-600'>Maňa's road to medicine!</h1>
       <Quiz />
     </div>
   );

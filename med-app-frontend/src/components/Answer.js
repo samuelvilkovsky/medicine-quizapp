@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 
-const Answer = ({text, isCorrect}) => {
+
+const Answer = ({text, isCorrect, updateScore}) => {
     const [clicked, setClicked] = useState(false);
 
     const handleClick = () => {
-        setClicked(true);
+        if(!clicked){
+            setClicked(true);
+            if (isCorrect){
+                updateScore();
+            }
+        }
     };
 
     return (
