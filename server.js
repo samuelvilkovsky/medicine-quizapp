@@ -10,7 +10,6 @@ mongoose.connect('mongodb://localhost/med_app', {useNewUrlParser: true, useUnifi
 
 app.get('/', async (req, res) => {
     const question = await Question.find();
-    console.log(question);
     res.json(question);
 });
 
