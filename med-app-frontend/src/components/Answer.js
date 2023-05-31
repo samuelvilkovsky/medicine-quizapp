@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from "react";
 
-
-const Answer = ({text, isCorrect, updateScore}) => {
-    const [clicked, setClicked] = useState(false);
+const Answer = ({text, answer, updateAnswerState}) => {   // pridajte 'answer' a 'updateAnswerState' do props
 
     const handleClick = () => {
-        if(!clicked){
-            setClicked(true);
-            if (isCorrect){
-                updateScore();
+        if(!answer.clicked){  // použite 'answer.clicked' miesto 'clicked'
+            if (answer.isCorrect){
+                updateAnswerState(true);
+            } else {
+                updateAnswerState(false);
             }
         }
     };
@@ -16,7 +15,7 @@ const Answer = ({text, isCorrect, updateScore}) => {
     return (
         <button 
             onClick={handleClick} 
-            className={`w-full text-center p-4 my-2 rounded-lg shadow-md font-medium text-lg ${clicked ? (isCorrect ? 'bg-green-500 text-white text-2xl' : 'bg-red-500 text-white') : 'bg-gray-200 text-gray-700 '}`}
+            className={`w-full text-center p-4 my-2 rounded-lg shadow-md font-medium text-lg ${answer.clicked ? (answer.isCorrect ? 'bg-green-500 text-white text-2xl' : 'bg-red-500 text-white') : 'bg-gray-200 text-gray-700 '}`}
         >
             {text}  
         </button>
