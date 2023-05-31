@@ -7,7 +7,8 @@ import Question from './components/Question';
 
 
 const Quiz = () => {
-    const[questions, setQuestions] = useState([]);
+    const[originalQuestions, setOriginalQuestions] = useState([]);
+    // const[questions, setQuestions] = useState([]);
     const[testQuestions, setTestQuestions] = useState([]);
     const[range, setRange] = useState({start: 0, end: 0});
     const[seconds, setSeconds] = useState(1);
@@ -18,11 +19,13 @@ const Quiz = () => {
     const[wrongCount, setWrongCount] = useState(0);
     const[questionIndex, setQuestionIndex] = useState(0);
 
+    const fetchQuestions = async () => {
+        const response = await axios.get('http://localhost:3000/questions');
+        setOriginalQuestions(response.data);
+        // setQuestions(response.data);
+    };
+
     useEffect(() => {
-        const fetchQuestions = async () => {
-            const response = await axios.get('http://localhost:3000/questions');
-            setQuestions(response.data);
-        };
         fetchQuestions();
     }, []);
 
@@ -81,12 +84,9 @@ const Quiz = () => {
         return array;
     }
 
-    const generateRandomTest = () => {
-        // reset question index
+    const generateRandomTest = async () => {
         setQuestionIndex(0);
-        // Shuffle the original questions array
-        let shuffledQuestions = shuffle(questions);
-        // Take the first 20 questions or all if there are less
+        let shuffledQuestions = shuffle([...originalQuestions]);
         let generatedTest = shuffledQuestions.slice(0, Math.min(20, shuffledQuestions.length));
 
         setTestQuestions(generatedTest);
@@ -94,11 +94,10 @@ const Quiz = () => {
         setSeconds(1);
     }
 
-    const generateRangeTest = () => {
-        // reset question index
+    const generateRangeTest = async () => {
         setQuestionIndex(0);
-        if(range.start >= 1 && range.end < questions.length+1 && range.start < range.end){
-            let rangeTest = questions.slice(range.start-1, range.end);
+        if(range.start >= 1 && range.end < originalQuestions.length+1 && range.start < range.end){
+            let rangeTest = originalQuestions.slice(range.start-1, range.end);
             setTestQuestions(rangeTest);
         }else{
             console.error("Invalid range");
@@ -106,6 +105,7 @@ const Quiz = () => {
 
         setIsTimerRunning(true);
         setSeconds(1);
+
     }
 
     const handleRangeChange = (event, position) => {
@@ -117,8 +117,9 @@ const Quiz = () => {
     console.log(questionIndex, testQuestions.length);
 
     return (
-        <div className="flex flex-col items-center  min-h-screen">
-            <div className="flex space-x-4 mb-4">
+        <div className="flex flex-col items-center min-h-fit quiz-wrapper">
+            <p className='font-bold text-orange-600 m-0'>Táto stránka bola vytvorená ako príprava na príjimačky na LF UPJŠ.</p>
+            <div className="flex space-x-4 my-4">
                 <button onClick={generateRandomTest} className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Náhodný test</button>
                 <button onClick={generateRangeTest} className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700">Generuj test</button>
             </div>
@@ -145,12 +146,13 @@ const Quiz = () => {
                             <p className="my-2 text-red-600 text-lg font-semibold">Nesprávne odpovede: {wrongCount}</p>
                             <p className="my-2 text-blue-600 text-lg font-semibold">Počet bodov: {(correctCount * 4) - (wrongCount)}</p>
                             <p className="my-2 mb-2 text-gray-600 text-lg font-medium">Trvanie: {minutes} minút a {seconds - 1} sekúnd</p>
-                            <button onClick={() => setShowResults(false)} className='mt-2 px-8 py-2 text-sm font-bold text-white bg-red-500 rounded hover:bg-red-700'>Zavrieť</button>
+                            <button onClick={() => {
+                                setShowResults(false);
+                                setTestQuestions([]);
+                            }} className='mt-2 px-8 py-2 text-sm font-bold text-white bg-red-500 rounded hover:bg-red-700'>Zavrieť</button>
                         </div>
                     </div>
                 </div>
-
-
             }
         </div>
     );
