@@ -17,13 +17,14 @@ fs.createReadStream('resources/bio1.csv')
     });
 
 async function importData(data) {
-    for (let row of data){
+    for (let i = 0; i < data.length; i++){
+        const row = data[i];
         console.log(row);
         console.log(row.isCorrect1);
         const existingQuestion = await Question.findOne({ text: row.question });
 
         if(existingQuestion){
-            console.log('Question already exists:', row.question);
+            console.log(`Question "${row.question}" already exists at index ${i+1}`);
             continue;
         }
 
