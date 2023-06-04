@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/free-regular-svg-icons": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -41,14 +38,5 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.3.2"
-  },
-  "overrides": {
-    "@babel/core": "7.19.6",
-    "@babel/generator": "7.19.6",
-    "@babel/compat-data": "7.19.4",
-    "@babel/helper-compilation-targets": "7.19.3",
-    "@babel/helper-create-class-features-plugin": "7.19.0",
-    "@babel/helper-module-transforms": "7.19.6",
-    "babel-loader": "8.2.5"
   }
 }

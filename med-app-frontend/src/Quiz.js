@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Question from './components/Question';
+import Notification from './components/Notification';
+import './Quiz.css';
 // import { c } from 'tar';
 // import { set } from 'mongoose';
 // import { set } from 'mongoose';
@@ -18,6 +20,7 @@ const Quiz = () => {
     const[correctCount, setCorrectCount] = useState(0);
     const[wrongCount, setWrongCount] = useState(0);
     const[questionIndex, setQuestionIndex] = useState(0);
+    const[notification, setNotification] = useState(null);
 
     const fetchQuestions = async () => {
         const response = await axios.get('http://localhost:3000/questions');
@@ -44,6 +47,15 @@ const Quiz = () => {
         }
         return () => clearInterval(interval);
     }, [isTimerRunning, seconds]);
+
+    const closeNotification = () => {
+        setNotification(null); 
+    };
+
+    const resetTimer = () => {
+        setSeconds(1);
+        setMinutes(0);
+    };
 
     const submitQuiz = () => {
         setQuestionIndex(0);
@@ -91,7 +103,7 @@ const Quiz = () => {
 
         setTestQuestions(generatedTest);
         setIsTimerRunning(true);
-        setSeconds(1);
+        resetTimer();
     }
 
     const generateRangeTest = async () => {
@@ -99,13 +111,14 @@ const Quiz = () => {
         if(range.start >= 1 && range.end < originalQuestions.length+1 && range.start < range.end){
             let rangeTest = originalQuestions.slice(range.start-1, range.end);
             setTestQuestions(rangeTest);
-        }else{
-            console.error("Invalid range");
+            setIsTimerRunning(true);
+            resetTimer();
+        } else{
+            // Trigger Notification instead of console.error
+            console.error('Invalid range of questions')
+            setNotification({message: 'Neplatný interval zvolených testov', color: 'red'});
         }
-
-        setIsTimerRunning(true);
-        setSeconds(1);
-
+        
     }
 
     const handleRangeChange = (event, position) => {
@@ -114,29 +127,34 @@ const Quiz = () => {
     }
 
     useEffect(() => {}, [questionIndex]);
-    console.log(questionIndex, testQuestions.length);
+    // console.log(questionIndex, testQuestions.length);
 
     return (
         <div className="flex flex-col items-center min-h-fit quiz-wrapper">
-            <p className='font-bold text-orange-600 m-0'>Táto stránka bola vytvorená ako príprava na príjimačky na LF UPJŠ.</p>
+            {notification && 
+                <Notification 
+                    message={notification.message} 
+                    color={notification.color} 
+                    closeNotification={closeNotification} 
+                />}
             <div className="flex space-x-4 my-4">
                 <button onClick={generateRandomTest} className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Náhodný test</button>
                 <button onClick={generateRangeTest} className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700">Generuj test</button>
-            </div>
-            <span className='pb-3 font-bold text-gray-600'>Čas: {minutes} m {seconds - 1} s</span>
-            <div className="flex space-x-4 mb-8">
-                <input type="number" onChange={(e) => handleRangeChange(e, "start")} placeholder="Začiatok" className="px-2 py-1 border rounded"/>
-                <input type="number" onChange={(e) => handleRangeChange(e, "end")} placeholder="Koniec" className="px-2 py-1 border rounded"/>
+                <div className="flex space-x-4">
+                    <input style={{width: '100px', textAlign: 'center'}} type="number" onChange={(e) => handleRangeChange(e, "start")} placeholder="Začiatok" className="px-2 py-1 border rounded"/>
+                    <input style={{width: '100px', textAlign: 'center'}} type="number" onChange={(e) => handleRangeChange(e, "end")} placeholder="Koniec" className="px-2 py-1 border rounded"/>
+                </div>
+                <span className='mt-2 font-bold text-gray-600'>Čas: {minutes} m {seconds - 1} s</span>
             </div>
             {!!testQuestions.length && (
                 <Question question={testQuestions[questionIndex]} />
             )}
-            <div className='flex justify-between space-x-4 mx-auto'>
-                {questionIndex >= 1 && <button onClick={() => setQuestionIndex(questionIndex-1)} className='mt-5 px-8 py-4 font-bold text-white bg-orange-500 rounded hover:bg-orange-700'>Späť</button>} 
-                {questionIndex < testQuestions.length - 1 && <button onClick={() => setQuestionIndex(questionIndex+1)} className='mt-5 px-8 py-4 font-bold text-white bg-green-500 rounded hover:bg-green-700'>Ďalej</button>} 
+            <div className='flex justify-between space-x-4 mx-auto my-5'>
+                {questionIndex >= 1 && <button onClick={() => setQuestionIndex(questionIndex-1)} className='px-8 py-4 font-bold text-white bg-orange-500 rounded hover:bg-orange-700'>Späť</button>} 
+                {questionIndex < testQuestions.length - 1 && <button onClick={() => setQuestionIndex(questionIndex+1)} className='px-8 py-4 font-bold text-white bg-green-500 rounded hover:bg-green-700'>Ďalej</button>} 
+                {questionIndex === testQuestions.length - 1 && <button onClick={submitQuiz} className="px-8 py-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Potvrdiť</button>}
             </div>
-            {questionIndex === testQuestions.length - 1 && <button onClick={submitQuiz} className="mt-5 px-8 py-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Potvrdiť</button>}
-            {showResults &&
+                {showResults &&
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <div className="bg-white rounded-lg w-1/2">
                         <div className="flex flex-col items-center p-5">
