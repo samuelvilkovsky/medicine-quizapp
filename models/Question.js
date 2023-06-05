@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
-    id: Number,
+  subject: String,
+  id: Number,
+  text: String,
+  answers: [{
     text: String,
-    answers: [{
-        text: String,
-        isCorrect: Boolean
-    }]
+    isCorrect: Boolean
+  }]
 });
 
-const Question = mongoose.model('Question', questionSchema); 
+const Question = mongoose.model('Question', questionSchema);
 
 module.exports = Question;

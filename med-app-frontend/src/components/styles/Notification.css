@@ -1,0 +1,28 @@
+.notification {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    color: white;
+    animation: slide 0.5s forwards;
+    font-size: 1.2rem;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+.notification-message {
+    word-wrap: break-word;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 0.9;
+    }
+}
