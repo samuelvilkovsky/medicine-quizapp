@@ -23,6 +23,11 @@ mongoose.connect('mongodb://localhost/med_app', { useNewUrlParser: true, useUnif
             continue;
           }
 
+          if (row.question === ''){
+            console.log(`Question at index ${i + 1} is empty`);
+            continue;
+          }
+
           const question = new Question({
             subject: 'chemistry',
             id: row.id,
