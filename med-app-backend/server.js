@@ -27,7 +27,8 @@ app.use('/user/verifyToken', AuthRoutes);
 app.use('/user', userRoutes);
 
 const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;
-const port = 3000;
+console.log(databaseConnection);
+const port = 8888;
 
 mongoose.connect(
     databaseConnection, 
@@ -48,6 +49,6 @@ mongoose.connect(
 //     res.json(question);
 // });
 
-app.listen(port, () => {
-    console.log(`Server listnening at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server listnening at PORT = ${port}`);
 });
