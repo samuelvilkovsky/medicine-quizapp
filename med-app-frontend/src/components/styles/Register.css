@@ -1,0 +1,67 @@
+/* Add this CSS to your stylesheets (e.g., styles.css) */
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.input-field {
+    width: 250px;
+    height: 40px;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.register-btn {
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.register-btn:hover {
+    background-color: #0056b3;  
+}
+
+.redirect-link {
+
+    font-size: 14px;
+    font-weight: 200;
+    color: #000000;
+    text-decoration: none;
+}
+
+.error-border {
+    border: 2px solid red;
+}
+
+.password-wrapper {
+    position: relative;
+    /* margin-bottom: 10px; You might need to adjust this */
+}
+
+.show-password-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px; /* You can adjust the font size */
+    color: #333; /* You can adjust the color */
+}
+

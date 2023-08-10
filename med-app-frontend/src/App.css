@@ -1,0 +1,84 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 50px;
+  background-color: #E9E0DD; /* Light blue background */
+  color: #343a40; /* Dark text color for contrast */
+  width: 100%;
+}
+
+.logo {
+  font-size: 3em; /* Increased font size */
+  font-weight: bold;
+  color: #ca3e02;
+  
+  /* Lighter and softer text shadows for 3D effect */
+  text-shadow: 2px 2px #ffa06c, 4px 4px #ffb089;
+  
+  /* Transition for a smooth hover effect */
+  transition: all 0.3s ease;
+}
+
+/* Hover effect to make the logo more interactive */
+.logo:hover {
+  /* Reduce shadow for a "pressing down" effect on hover */
+  text-shadow: 1px 1px #ffa06c, 2px 2px #ffb089;
+  transform: translateY(1px); 
+}
+
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.greeting {
+  margin-right: 20px;
+  font-size: 1.2em;
+}
+
+.username {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background-color: #17a2b8; /* Light blue background */
+  color: #fff; /* White text for contrast */
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #138496; /* Darker blue for hover effect */
+}
+
+.profile-btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff9248 ; /* Light orange background color */
+  color: #fff; /* White text for contrast */
+  cursor: pointer;
+}
+
+.profile-btn:hover {
+  background-color: #e68a3f; /* Darker orange for hover effect */
+}
