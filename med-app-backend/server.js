@@ -27,11 +27,11 @@ app.use('/questions', questionsRoutes); // Use the routes
 app.use('/user/verifyToken', AuthRoutes); 
 app.use('/user', userRoutes);
 
-const ConnectionString = process.env.MONGO_ATLAS_CONNECTION_STRING;
+const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;
 const port = 3000;
 
 mongoose.connect(
-    ConnectionString, 
+    databaseConnection, 
     {useNewUrlParser: true, useUnifiedTopology: true})
     
     .catch(error => {
@@ -39,15 +39,15 @@ mongoose.connect(
     process.exit(1);
   });;
 
-app.get('/user', async (req, res) => {
-    const user = await User.find();
-    res.json(user);
-});
+// app.get('/user', async (req, res) => {
+//     const user = await User.find();
+//     res.json(user);
+// });
 
-app.get('/', async (req, res) => {
-    const question = await Question.find();
-    res.json(question);
-});
+// app.get('/', async (req, res) => {
+//     const question = await Question.find();
+//     res.json(question);
+// });
 
 app.listen(port, () => {
     console.log(`Server listnening at http://localhost:${port}`);

@@ -4,9 +4,9 @@ const fs = require('fs');
 const Question = require('./models/question');
 require('dotenv').config();
 
-const ConnectionString = process.env.MONGO_ATLAS_CONNECTION_STRING;
+const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;
 
-mongoose.connect(ConnectionString, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(databaseConnection, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB (Chemistry)');
     const chemResults = [];
