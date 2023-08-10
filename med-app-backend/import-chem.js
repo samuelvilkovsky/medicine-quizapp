@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 const csvParser = require('csv-parser');
 const fs = require('fs');
 const Question = require('./models/question');
+require('dotenv').config();
 
-mongoose.connect('mongodb://mongodb/med_app', { useNewUrlParser: true, useUnifiedTopology: true })
+const ConnectionString = process.env.MONGO_ATLAS_CONNECTION_STRING;
+
+mongoose.connect(ConnectionString, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB (Chemistry)');
     const chemResults = [];

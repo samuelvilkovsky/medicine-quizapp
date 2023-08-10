@@ -27,10 +27,11 @@ app.use('/questions', questionsRoutes); // Use the routes
 app.use('/user/verifyToken', AuthRoutes); 
 app.use('/user', userRoutes);
 
+const ConnectionString = process.env.MONGO_ATLAS_CONNECTION_STRING;
 const port = 3000;
 
 mongoose.connect(
-    'mongodb://mongodb:27017/med_app', 
+    ConnectionString, 
     {useNewUrlParser: true, useUnifiedTopology: true})
     
     .catch(error => {
