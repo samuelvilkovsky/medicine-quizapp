@@ -103,6 +103,7 @@ const Profile = () => {
               });
             if (res.data.success) { // assuming the server responds with a success field
               setNotification({ message: 'Heslo bolo zmenené!', color: 'green' });
+              setShowChangePasswordModal(false);
             } else if (res.data.error === 'Current password does not match') { // adapt as needed
               setNotification({ message: 'Current password is incorrect!', color: 'red' });
               setPasswordError(true);
