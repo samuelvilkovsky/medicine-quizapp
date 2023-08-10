@@ -1,0 +1,30 @@
+version: '3'
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  frontend:
+    build: med-app-frontend/
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./med-app-frontend:/usr/app
+    environment:
+      - NODE_ENV=development
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
