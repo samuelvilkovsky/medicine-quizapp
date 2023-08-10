@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Question = require('./models/question'); // Import model
+// const Question = require('./models/question'); // Import model
 const questionsRoutes = require('./routes/questions'); // Import routes
 const userRoutes = require('./routes/user'); // Import user route
 const AuthRoutes = require('./routes/verifyToken'); // Import token auth route
