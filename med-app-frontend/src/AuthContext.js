@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+require('dotenv').config();
 
 const AuthContext = createContext();
+const API_URL = process.env.URI_ENDPOINT;
 
 export const useAuth = () => React.useContext(AuthContext);
 
@@ -12,7 +14,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/user/login', { email, password });
+      const response = await axios.post(`${API_URL}user/login`, { email, password });
       if (response.data.error) {
         throw new Error(response.data.error);
       }
@@ -21,7 +23,7 @@ const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
   
       // Get user details
-      axios.get('http://localhost:3000/user/me', {
+      axios.get(`${API_URL}/user/me`, {
           headers: {
               Authorization: `Bearer ${response.data.token}`
           }
@@ -51,7 +53,7 @@ const AuthProvider = ({ children }) => {
   
     if (token) {
       axios
-        .get('http://localhost:3000/user/me', {
+        .get(`${API_URL}/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

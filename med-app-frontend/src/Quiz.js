@@ -5,6 +5,7 @@ import Notification from './components/Notification';
 import './Quiz.css';
 import { useAuth } from './AuthContext'; // Import the AuthContext hook
 import { useNavigate } from 'react-router-dom';
+require('dotenv').config();
 
 const Quiz = () => {
     const [originalQuestions, setOriginalQuestions] = useState([]);
@@ -22,6 +23,8 @@ const Quiz = () => {
     const { user, authReady } = useAuth();
     const navigate = useNavigate();
 
+    const API_URL = process.env.URI_ENDPOINT;
+
     useEffect(() => {
         if (authReady && !user) {
             navigate('/login');
@@ -32,7 +35,7 @@ const Quiz = () => {
     const fetchQuestions = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/questions?subject=${selectedSubject}`
+                `${API_URL}/questions?subject=${selectedSubject}`
             );
             setOriginalQuestions(response.data);
         } catch (error) {
@@ -90,7 +93,7 @@ const Quiz = () => {
         setWrongCount(wrong);
     
         // Send the results to the backend
-        axios.post('http://localhost:3000/testResult', {
+        axios.post(`${API_URL}/testResult`, {
             userId: user._id,
             subject: selectedSubject,
             correctCount: correct,

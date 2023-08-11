@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Notification from './Notification';
 import '../components/styles/Register.css';
+require('dotenv').config();
+
+const API_URL = process.env.URI_ENDPOINT;
 
 const RegisterComponent = () => {
   const navigate = useNavigate();
@@ -48,7 +51,7 @@ const RegisterComponent = () => {
     }
   
     try {
-      const res = await axios.post('http://localhost:3000/user/register', {
+      const res = await axios.post(`${API_URL}/user/register`, {
         username,
         email,
         password,

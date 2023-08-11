@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const csvParser = require('csv-parser');
 const fs = require('fs');
-const Question = require('./models/question');
+const Question = require('./models/Question');
 require('dotenv').config();
 
 const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;

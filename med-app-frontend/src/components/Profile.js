@@ -4,6 +4,9 @@ import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Notification from './Notification';
 import '../components/styles/Profile.css';  // Import your CSS file
+require('dotenv').config();
+
+const API_URL = process.env.URI_ENDPOINT;
 
 const Profile = () => {
     const { authReady, user } = useAuth();
@@ -27,7 +30,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (user) {
-            axios.get(`http://localhost:3000/testResult?userId=${user._id}`)
+            axios.get(`${API_URL}/testResult?userId=${user._id}`)
                 .then(response => {
                     console.log("Test results: ", response.data);
                     setTestResults(response.data.slice(-5));
@@ -49,10 +52,10 @@ const Profile = () => {
     const deleteTestResult = async (id) => {
         try {
             // Delete the test result from the database.
-            await axios.delete(`http://localhost:3000/testResult/${id}`);
+            await axios.delete(`${API_URL}/testResult/${id}`);
             setNotification({ message: 'Záznam bol vymazaný!', color: 'green' });
             // Fetch the latest 5 test results from the database.
-            axios.get(`http://localhost:3000/testResult?userId=${user._id}`)
+            axios.get(`${API_URL}/testResult?userId=${user._id}`)
                 .then(response => {
                     // Get the 5 latest test results.
                     const latestResults = response.data.slice(-5);
@@ -91,7 +94,7 @@ const Profile = () => {
         console.log(currentPassword, newPassword, confirmNewPassword)
 
         try {
-            const res = await axios.post('http://localhost:3000/user/change-password', {
+            const res = await axios.post(`${API_URL}/user/change-password`, {
               userId: user._id, // assuming this is how you identify the user
               currentPassword,
               newPassword,
@@ -119,7 +122,7 @@ const Profile = () => {
         if (deleteConfirmationText.toLowerCase() === 'vymaz'){
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.delete('http://localhost:3000/user/delete', {
+                const res = await axios.delete(`${API_URL}/user/delete`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
