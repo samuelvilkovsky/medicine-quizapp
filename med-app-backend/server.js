@@ -13,7 +13,7 @@ app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 var corsOptions = {
-    origin: 'http://localhost:3001',  // Zmeňte na adresu klienta
+    origin: ['http://localhost:3000', 'https://intelliwaste.com'],  // Zmeňte na adresu klienta
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,                
     allowedHeaders: ['Content-Type', 'Authorization'],

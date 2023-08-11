@@ -3,7 +3,8 @@ import axios from 'axios';
 require('dotenv').config();
 
 const AuthContext = createContext();
-const API_URL = process.env.URI_ENDPOINT;
+const API_URL = process.env.REACT_APP_URI_ENDPOINT;
+console.log('aaa', API_URL);
 
 export const useAuth = () => React.useContext(AuthContext);
 
