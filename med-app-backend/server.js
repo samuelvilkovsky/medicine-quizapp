@@ -21,10 +21,10 @@ var corsOptions = {
 };  
 app.use(cors(corsOptions));
 app.options('*', cors())
-app.use('/testResult', testResultRoutes); // Use the test results route
-app.use('/questions', questionsRoutes); // Use the routes
-app.use('/user/verifyToken', AuthRoutes); 
-app.use('/user', userRoutes);
+app.use('api/testResult', testResultRoutes); // Use the test results route
+app.use('api/questions', questionsRoutes); // Use the routes
+app.use('api/user/verifyToken', AuthRoutes); 
+app.use('api/user', userRoutes);
 
 const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;
 // console.log(databaseConnection);

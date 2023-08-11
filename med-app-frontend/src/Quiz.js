@@ -35,7 +35,7 @@ const Quiz = () => {
     const fetchQuestions = async () => {
         try {
             const response = await axios.get(
-                `${API_URL}/questions?subject=${selectedSubject}`
+                `${API_URL}/api/questions?subject=${selectedSubject}`
             );
             setOriginalQuestions(response.data);
         } catch (error) {
@@ -93,7 +93,7 @@ const Quiz = () => {
         setWrongCount(wrong);
     
         // Send the results to the backend
-        axios.post(`${API_URL}/testResult`, {
+        axios.post(`${API_URL}/api/testResult`, {
             userId: user._id,
             subject: selectedSubject,
             correctCount: correct,

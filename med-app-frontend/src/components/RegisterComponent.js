@@ -5,7 +5,7 @@ import Notification from './Notification';
 import '../components/styles/Register.css';
 require('dotenv').config();
 
-const API_URL = process.env.URI_ENDPOINT;
+const API_URL = process.env.REACT_APP_URI_ENDPOINT;
 
 const RegisterComponent = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const RegisterComponent = () => {
     }
   
     try {
-      const res = await axios.post(`${API_URL}/user/register`, {
+      const res = await axios.post(`${API_URL}/api/user/register`, {
         username,
         email,
         password,

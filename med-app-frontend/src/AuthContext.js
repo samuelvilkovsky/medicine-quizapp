@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const AuthContext = createContext();
 const API_URL = process.env.REACT_APP_URI_ENDPOINT;
-console.log('aaa', API_URL);
+// console.log('aaa', API_URL);
 
 export const useAuth = () => React.useContext(AuthContext);
 
@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/user/login`, { email, password });
+      const response = await axios.post(`${API_URL}/api/user/login`, { email, password });
       if (response.data.error) {
         throw new Error(response.data.error);
       }
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
   
       // Get user details
-      axios.get(`${API_URL}/user/me`, {
+      axios.get(`${API_URL}/api/user/me`, {
           headers: {
               Authorization: `Bearer ${response.data.token}`
           }
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }) => {
   
     if (token) {
       axios
-        .get(`${API_URL}/user/me`, {
+        .get(`${API_URL}/api/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
