@@ -6,7 +6,8 @@ import Notification from './Notification';
 import '../components/styles/Profile.css';  // Import your CSS file
 require('dotenv').config();
 
-const API_URL = process.env.URI_ENDPOINT;
+const API_URL = process.env.REACT_APP_URI_ENDPOINT;
+console.log('aaa', API_URL)
 
 const Profile = () => {
     const { authReady, user } = useAuth();

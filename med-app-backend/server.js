@@ -27,7 +27,7 @@ app.use('/user/verifyToken', AuthRoutes);
 app.use('/user', userRoutes);
 
 const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;
-console.log(databaseConnection);
+// console.log(databaseConnection);
 const port = 8888;
 
 mongoose.connect(

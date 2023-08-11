@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}user/login`, { email, password });
+      const response = await axios.post(`${API_URL}/user/login`, { email, password });
       if (response.data.error) {
         throw new Error(response.data.error);
       }

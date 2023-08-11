@@ -7,6 +7,8 @@ import { useAuth } from './AuthContext'; // Import the AuthContext hook
 import { useNavigate } from 'react-router-dom';
 require('dotenv').config();
 
+const API_URL = process.env.REACT_APP_URI_ENDPOINT;
+
 const Quiz = () => {
     const [originalQuestions, setOriginalQuestions] = useState([]);
     const [testQuestions, setTestQuestions] = useState([]);
@@ -22,8 +24,6 @@ const Quiz = () => {
     const [selectedSubject, setSelectedSubject] = useState('');
     const { user, authReady } = useAuth();
     const navigate = useNavigate();
-
-    const API_URL = process.env.URI_ENDPOINT;
 
     useEffect(() => {
         if (authReady && !user) {
