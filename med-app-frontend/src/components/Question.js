@@ -1,29 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import Answer from './Answer';
 
-const Question = ({question}) => {
+const Question = ({ question }) => {
     const [clickedCorrect, setClickedCorrect] = useState(0);
     const [clickedWrong, setClickedWrong] = useState(0);
+    const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
     const correctAnswers = question.answers.filter(answer => answer.isCorrect).length;
 
     const updateAnswerState = (isCorrect, index) => {
-        if (isCorrect){
+        if (isCorrect) {
             setClickedCorrect(clickedCorrect + 1);
         } else {
             setClickedWrong(clickedWrong + 1);
         }
-        // tu aktualizujeme stav odpovede na 'clicked'
-        question.answers[index].clicked = true;
+        // Mark the answer as clicked
+        let updatedAnswers = [...shuffledAnswers];
+        updatedAnswers[index].clicked = true;
+        setShuffledAnswers(updatedAnswers);
+    };
+
+    // Shuffle function using Fisher-Yates algorithm
+    const shuffleArray = array => {
+        let newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
     };
 
     useEffect(() => {
         setClickedCorrect(0);
         setClickedWrong(0);
-        // resetujeme stav 'clicked' všetkých odpovedí pri zmene otázky
-        question.answers.forEach(answer => answer.clicked = false);
+        // Reset the clicked state of all answers when the question changes
+        const resetAnswers = question.answers.map(answer => ({ ...answer, clicked: false }));
+        
+        // Shuffle the answers and set them
+        setShuffledAnswers(shuffleArray(resetAnswers));
     }, [question]);
-
 
     return (
         <div className='flex flex-col items-center w-full max-w-screen-xl p-4 m-2 border-2 border-gray-500 rounded-xl shadow-md bg-white' style={{ maxWidth: '1400px', minWidth: '1400px' }}>
@@ -33,7 +48,7 @@ const Question = ({question}) => {
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 w-full'>
-                {question.answers.map((answer, index) => (
+                {shuffledAnswers.map((answer, index) => (
                     <div key={index} className='w-full'>
                         <Answer text={answer.text} answer={answer} updateAnswerState={(isCorrect) => updateAnswerState(isCorrect, index)}/>
                     </div>

@@ -1,3 +1,7 @@
+/* IMPORT COMMAND FOR BIOLOGY QUESTIONS (RUN IN TERMINAL):
+scp -i medicine-quizapp-access.pem /Users/samuelvilkovsky/Development/medicine-quizapp-folder/med-app-backend/resources/bio1.csv ubuntu@16.170.202.251:~/medicine-quizapp/med-app-backend/resources/bio1.csv
+*/
+
 const mongoose = require('mongoose');
 const csvParser = require('csv-parser');
 const fs = require('fs');
@@ -5,10 +9,16 @@ const Question = require('./models/Question');
 require('dotenv').config();
 
 const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;
+const reinsertFlag = process.argv.includes('--i');
 
 mongoose.connect(databaseConnection, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
+  .then(async () => {
     console.log('Connected to MongoDB (Biology)');
+    if (reinsertFlag) {
+      await Question.deleteMany({
+        subject: 'biology',
+      });
+    }
     const bioResults = [];
 
     fs.createReadStream('resources/bio1.csv')
@@ -21,7 +31,7 @@ mongoose.connect(databaseConnection, { useNewUrlParser: true, useUnifiedTopology
           console.log(row.isCorrect1);
           const existingQuestion = await Question.findOne({ text: row.question });
 
-          if (existingQuestion) {
+          if (existingQuestion && !reinsertFlag) {
             console.log(`Question "${row.question}" already exists at index ${i + 1}`);
             continue;
           }

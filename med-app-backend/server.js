@@ -1,3 +1,6 @@
+/* SERVER CONNECTION COMMANDS
+ssh -i medicine-quizapp-access.pem ubuntu@16.170.202.251
+*/
 const express = require('express');
 const mongoose = require('mongoose');
 const questionsRoutes = require('./routes/questions'); // Import routes

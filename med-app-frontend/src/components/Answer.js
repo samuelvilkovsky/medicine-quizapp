@@ -1,7 +1,6 @@
 import React from "react";
 
 const Answer = ({text, answer, updateAnswerState}) => {   // pridajte 'answer' a 'updateAnswerState' do props
-
     const handleClick = () => {
         if(!answer.clicked){  // použite 'answer.clicked' miesto 'clicked'
             if (answer.isCorrect){

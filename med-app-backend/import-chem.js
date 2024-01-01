@@ -1,3 +1,7 @@
+/* IMPORT COMMAND FOR CHEMISTRY QUESTIONS (RUN IN TERMINAL):
+scp -i medicine-quizapp-access.pem /Users/samuelvilkovsky/Development/medicine-quizapp-folder/med-app-backend/resources/chem1.csv ubuntu@16.170.202.251:~/medicine-quizapp/med-app-backend/resources/chem1.csv
+*/
+
 const mongoose = require('mongoose');
 const csvParser = require('csv-parser');
 const fs = require('fs');
@@ -5,10 +9,16 @@ const Question = require('./models/Question');
 require('dotenv').config();
 
 const databaseConnection = process.env.MONGO_ATLAS_CONNECTION_STRING;
+const reinsertFlag = process.argv.includes('--i');
 
 mongoose.connect(databaseConnection, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
+  .then(async () => {
     console.log('Connected to MongoDB (Chemistry)');
+    if (reinsertFlag) {
+      await Question.deleteMany({
+        subject: 'chemistry',
+      });
+    }
     const chemResults = [];
 
     fs.createReadStream('resources/chem1.csv')
@@ -21,7 +31,7 @@ mongoose.connect(databaseConnection, { useNewUrlParser: true, useUnifiedTopology
           console.log(row.isCorrect1);
           const existingQuestion = await Question.findOne({ text: row.question });
 
-          if (existingQuestion) {
+          if (existingQuestion && !reinsertFlag) {
             console.log(`Question "${row.question}" already exists at index ${i + 1}`);
             continue;
           }
